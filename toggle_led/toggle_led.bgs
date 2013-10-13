@@ -1,0 +1,51 @@
+# Modified from an excellent example:
+# http://blog.bluetooth-smart.com/2012/09/16/programming-the-ble112-using-bgscript/
+# Added support for changing the LED toggle state via the GAP
+#
+# This example script will flash an LED connected to P0.7 every second
+dim result
+dim port
+dim data
+# LED Toggle Control. 0x00 = Always on. 0x01 = Toggle. Set via GATT
+dim xgatt_led_value
+
+# Boot event listener
+event system_boot(major ,minor ,patch ,build ,ll_version ,protocol_version ,hw)
+  xgatt_led_value = 1
+
+  # configure P0.7 as output
+  call hardware_io_port_config_direction(0, $80)
+
+  # Disable P0.7 pin. Parameters: I/O port to write to 0/1/2,
+  #                               bitmask of pins to modify,
+  #                               bitmask of pin values to set
+  call hardware_io_port_write(0, $80, 0)
+  # System started, enable advertising and allow connections
+  call gap_set_mode(gap_general_discoverable,gap_undirected_connectable)
+
+  #Set timer to generate event every 1s
+  call hardware_set_soft_timer(32768, 1, 0)
+end
+
+
+#Timer event listener toggles LED if xgatt_led_value is > 0
+event hardware_soft_timer(handle)
+  call hardware_io_port_read(0, $80)(result, port, data)
+
+  if (data & $80) && xgatt_led_value then
+    call hardware_io_port_write(0, $80, 0)
+  else
+    call hardware_io_port_write(0, $80, $80)
+  end if
+end
+
+# GATT event listenter
+event attributes_value(connection, reason, handle, offset, value_len, value)
+  if handle = xgatt_led then
+    xgatt_led_value = value(0:1)
+  end if
+end
+
+event connection_disconnected(handle, result)
+  call gap_set_mode(gap_general_discoverable,gap_undirected_connectable)
+end

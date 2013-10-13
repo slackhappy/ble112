@@ -7,3 +7,7 @@ BUILD
 .scalate.d/
 project/sbt-launch-*.jar
 target/
+ref/
+attributes.txt
+variable_memory_usage.txt
+out.hex
