@@ -34,7 +34,7 @@ A word of caution: I used the included ribbon cable initially, but I think the p
 
 ## toggle_me project ##
 
-Now for some fun stuff.  The toggle_me project toggles an LED attached to the device on and off every second you can disable the toggling using a Bluetooth LE program on your phone that supports the Generic Attribute Profile.  I made a modified version of the toggle_led project from [Programming the BLE112 using BGScript](http://blog.bluetooth-smart.com/2012/09/16/programming-the-ble112-using-bgscript/) from bluetooth-smart.com, which is an excellent tutorial.
+Now for some fun stuff.  The [toggle_led](https://github.com/slackhappy/ble112/tree/master/toggle_led) project toggles an LED attached to the device on and off every second you can disable the toggling using a Bluetooth LE program on your phone that supports the Generic Attribute Profile.  I made a modified version of the toggle_led project from [Programming the BLE112 using BGScript](http://blog.bluetooth-smart.com/2012/09/16/programming-the-ble112-using-bgscript/) from bluetooth-smart.com, which is an excellent tutorial.
 
 The toggle_led script from bluetooth-smart.com will toggle an LED, but the bluetooth radio seems to be mostly disabled.  This is because that tutorial uses the TI SmartRF programmer.  That programmer overwrites a region that where the bluegiga license key is supposed to reside, and I believe this disables most of the BGScript functionality.  If you accidentally use the SmartRF programmer, just use the BLE SW Update tool again, and paste your license back in, and you should be good to go.
 
