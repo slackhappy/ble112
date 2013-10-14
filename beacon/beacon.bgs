@@ -48,13 +48,16 @@ event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
   adv_data(25:2) = major_value(0:2)
   adv_data(27:2) = minor_value(0:2)
   adv_data(29:1) = tx_value(0:1) # 2's complement of calibrated Tx Power
+
+  # set advertising payload so it can be seen in the GATT
   call attributes_write(xgatt_beacon_adv, 0, 30, adv_data(0:30))
 
+  # set the iBeacon data
   call gap_set_adv_data(0, 30, adv_data(0:30))
   call gap_set_mode(gap_user_data, gap_undirected_connectable)
 end
 
-# GATT event listenter
+# GATT event listener
 event attributes_value(connection, reason, handle, offset, value_len, value)
   if handle = xgatt_beacon_uuid then
     call flash_ps_save(ps_beacon_uuid, 16, value(0:16))
@@ -72,6 +75,7 @@ event attributes_value(connection, reason, handle, offset, value_len, value)
     call flash_ps_save(ps_beacon_tx, 1, value(0:1))
     adv_data(29:1) = tx_value(0:1) # 2's complement of calibrated Tx Power
   end if
+  # update the advertising payload
   call attributes_write(xgatt_beacon_adv, 0, 30, adv_data(0:30))
   call gap_set_adv_data(0, 30, adv_data(0:30))
 end

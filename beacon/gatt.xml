@@ -58,7 +58,7 @@
         <value length="1" type="hex">BC</value>
       </characteristic>
       <characteristic uuid="7548d6e5-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_adv">
-        <description>Tx Power</description>
+        <description>Advertising Payload</description>
         <properties read="true"/>
         <value length="30" type="hex"></value>
       </characteristic>
