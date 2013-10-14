@@ -1,0 +1,81 @@
+# iBeacon-compatible advertising data
+# Modified from an excellent example:
+# https://bluegiga.zendesk.com/entries/23130518-BGScript-custom-advertisement-Custom-advertisement-packet-creation
+# Changed AD format to match iBeacon advertising data
+# http://stackoverflow.com/questions/18906988/what-is-the-ibeacon-bluetooth-profile/
+
+dim handle
+dim offset
+dim result
+dim value_len
+dim uuid_value(16)
+dim major_value(2)
+dim minor_value(2)
+dim tx_value(1)
+dim ps_beacon_uuid
+dim ps_beacon_major
+dim ps_beacon_minor
+dim ps_beacon_tx
+dim adv_data(30) # custom adv data
+
+
+# Boot event listener
+event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
+  ps_beacon_uuid = $8000
+  call flash_ps_load(ps_beacon_uuid)(result, value_len, uuid_value(0:16))
+  call attributes_write(xgatt_beacon_uuid, 0, value_len, uuid_value(0:16))
+  ps_beacon_major = $8001
+  call flash_ps_load(ps_beacon_major)(result, value_len, major_value(0:2))
+  call attributes_write(xgatt_beacon_major, 0, value_len, major_value(0:2))
+  ps_beacon_minor = $8002
+  call flash_ps_load(ps_beacon_minor)(result, value_len, minor_value(0:2))
+  call attributes_write(xgatt_beacon_minor, 0, value_len, minor_value(0:2))
+  ps_beacon_tx = $8003
+  call flash_ps_load(ps_beacon_tx)(result, value_len, tx_value(0:1))
+  call attributes_write(xgatt_beacon_tx, 0, value_len, tx_value(0:1))
+
+  adv_data( 0:1) = $02 # ad field length = 2 bytes
+  adv_data( 1:1) = gap_ad_type_flags   # ad field type = 0x01 (Flags)
+  adv_data( 2:1) = $06 # 3.C.18.1: 00000110b  generaldisc, no BR/EDR
+
+  adv_data( 3:1) = $1a # ad field length = 26 bytes
+  adv_data( 4:1) = $ff # 3.C.18.11 manufacturer-specific data
+  adv_data( 5:1) = $4c # Apple, Inc.
+  adv_data( 6:1) = $00 # Apple, Inc.
+  adv_data( 7:1) = $02 # iBeacon header, part 1
+  adv_data( 8:1) = $15 # iBeacon header, part 2 (maybe length?)
+  adv_data(9:16) = uuid_value(0:16)
+  adv_data(25:2) = major_value(0:2)
+  adv_data(27:2) = minor_value(0:2)
+  adv_data(29:1) = tx_value(0:1) # 2's complement of calibrated Tx Power
+  call attributes_write(xgatt_beacon_adv, 0, 30, adv_data(0:30))
+
+  call gap_set_adv_data(0, 30, adv_data(0:30))
+  call gap_set_mode(gap_user_data, gap_undirected_connectable)
+end
+
+# GATT event listenter
+event attributes_value(connection, reason, handle, offset, value_len, value)
+  if handle = xgatt_beacon_uuid then
+    call flash_ps_save(ps_beacon_uuid, 16, value(0:16))
+    adv_data(9:16) = value(0:16)
+  end if
+  if handle = xgatt_beacon_major then
+    call flash_ps_save(ps_beacon_major, 2, value(0:2))
+    adv_data(25:2) = value(0:2)
+  end if
+  if handle = xgatt_beacon_minor then
+    call flash_ps_save(ps_beacon_minor, 2, value(0:2))
+    adv_data(27:2) = value(0:2)
+  end if
+  if handle = xgatt_beacon_tx then
+    call flash_ps_save(ps_beacon_tx, 1, value(0:1))
+    adv_data(29:1) = tx_value(0:1) # 2's complement of calibrated Tx Power
+  end if
+  call attributes_write(xgatt_beacon_adv, 0, 30, adv_data(0:30))
+  call gap_set_adv_data(0, 30, adv_data(0:30))
+end
+
+event connection_disconnected(handle, result)
+  call gap_set_mode(gap_user_data, gap_undirected_connectable)
+end

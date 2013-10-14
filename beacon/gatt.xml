@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <service uuid="1800">
+      <description>Generic Access Profile</description>
+
+      <characteristic uuid="2a00">
+        <properties read="true" const="true" />
+        <value>iBeacon Demo</value>
+      </characteristic>
+
+      <characteristic uuid="2a01">
+        <properties read="true" const="true" />
+        <value type="hex">4142</value>
+      </characteristic>
+    </service>
+
+    <service uuid="180A">
+      <description>Device Information</description>
+      <characteristic uuid="2a29">
+        <properties read="true" const="true" />
+        <value>Bluegiga</value>
+      </characteristic>
+      <characteristic uuid="2a28">
+        <properties read="true" const="true" />
+        <value>1.0</value>
+      </characteristic>
+      <characteristic uuid="2a26">
+        <properties read="true" const="true" />
+        <value>25</value>
+      </characteristic>
+      <characteristic uuid="2a24">
+        <properties read="true" const="true" />
+        <value>BLE112</value>
+      </characteristic>
+    </service>
+
+    <service uuid="7548d6e0-3476-11e3-aa6e-0800200c9a66" advertise="true">
+      <description>iBeacon Service</description>
+      <characteristic uuid="7548d6e1-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_uuid">
+        <description>UUID</description>
+        <properties read="true" write="true" />
+        <value length="16" type="hex">E2C56DB5DFFB48D2B060D0F5A71096E0</value>
+      </characteristic>
+      <characteristic uuid="7548d6e2-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_major">
+        <description>Major</description>
+        <properties read="true" write="true" />
+        <value length="2" type="hex">0001</value>
+      </characteristic>
+      <characteristic uuid="7548d6e3-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_minor">
+        <description>Minor</description>
+        <properties read="true" write="true" />
+        <value length="2" type="hex">0002</value>
+      </characteristic>
+      <characteristic uuid="7548d6e4-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_tx">
+        <description>Tx Power</description>
+        <properties read="true" write="true" />
+        <value length="1" type="hex">BC</value>
+      </characteristic>
+      <characteristic uuid="7548d6e5-3476-11e3-aa6e-0800200c9a66" id="xgatt_beacon_adv">
+        <description>Tx Power</description>
+        <properties read="true"/>
+        <value length="30" type="hex"></value>
+      </characteristic>
+    </service>
+</configuration>
