@@ -73,7 +73,7 @@ event attributes_value(connection, reason, handle, offset, value_len, value)
   end if
   if handle = xgatt_beacon_tx then
     call flash_ps_save(ps_beacon_tx, 1, value(0:1))
-    adv_data(29:1) = tx_value(0:1) # 2's complement of calibrated Tx Power
+    adv_data(29:1) = value(0:1) # 2's complement of calibrated Tx Power
   end if
   # update the advertising payload
   call attributes_write(xgatt_beacon_adv, 0, 30, adv_data(0:30))
