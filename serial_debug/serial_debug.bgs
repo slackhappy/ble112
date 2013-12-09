@@ -1,0 +1,40 @@
+# Modified from an excellent example:
+# http://blog.bluetooth-smart.com/2012/09/16/programming-the-ble112-using-bgscript/
+# Added support for changing the LED toggle state via the GAP
+#
+# This example script will flash an LED connected to P0.7 every second
+dim result
+dim endpoint
+dim count
+dim count_copy
+dim count_buf(19)
+dim count_buf_pos
+
+
+# Boot event listener
+event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
+  endpoint = system_endpoint_uart1
+  count = 0
+  call system_endpoint_tx(endpoint, 11, "\n\rBooted!\n\r")(result)
+  call hardware_set_soft_timer(32768, 1, 0)
+end
+
+# Timer event sends a new message every second
+event hardware_soft_timer(handle)
+  count = count + 1
+
+  # super-hacky itoa. There is not even modulus in BGScript
+  # this is not very efficient, but I plan to keep this
+  # code snippet around to use in other projects.
+  count_buf(0:7) = "count: "
+  count_buf(17:2) = "\r\n"
+  count_copy = count
+  count_buf_pos = 17
+  while count_buf_pos > 7
+    count_buf_pos = count_buf_pos - 1
+    count_buf(count_buf_pos:1) = 48 + (count_copy - ((count_copy / 10) * 10))
+  	count_copy = count_copy / 10
+  end while
+    
+  call system_endpoint_tx(endpoint, 19, count_buf(0:19))(result)
+end
