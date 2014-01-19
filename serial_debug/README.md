@@ -6,7 +6,7 @@ While I developed the beacon project, and the toggle led project modifications, 
 ## Parts ##
 1.  All parts from [programming.md](/programming.md) - The BLE board, CC Debugger, Bluegiga Tools, License Key.
 2.  A USB to serial adapter.  I'm using the [FTDI Friend from adafruit](http://www.adafruit.com/products/284)
-3.  4 Male to Male jumper cables to connect your BLE board to the adapter
+3.  Four male to male jumper cables to connect your BLE board to the adapter
 4.  A serial terminal.  I'm using [RealTerm](http://sourceforge.net/projects/realterm/files/)
 5.  The official [FTDI VCP driver] (http://www.ftdichip.com/Drivers/VCP.htm) - The automatically installed Windows Update one is not the correct driver.  Remember to right-click, Run as Administrator on the extracted driver.
 6.  Peripheral Pinout from the [BLE112 datasheet](http://bluegiga.com/en-US/products/bluetooth-4.0-modules/ble112-bluetooth--smart-module/documentation/), Page 8.  Under Data Sheets, once you log in using the gear in the top-right corner.  Here is an older, public datasheet with the same info, less clearly laid out: [old BLE112 datasheet](https://www.bluetooth.org/tpg/RefNotes/BLE112_Datasheet1.pdf), Page 9.
