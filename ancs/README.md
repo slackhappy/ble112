@@ -79,4 +79,4 @@ Response (value source is DS handle)
 
 
 ## Demo ##
-<iframe src="//instagram.com/p/jf3HmdQwsb/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+[View video](http://instagram.com/p/jf3HmdQwsb/embed/#)
