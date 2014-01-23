@@ -13,6 +13,7 @@ See [programming.md](/programming.md), for information on programming the BLE112
 
 Projects:
 
+* [ancs](/ancs) - example implementation of a client for Apple Notification Center Service (e.g. smartwatch)
 * [beacon](/beacon) - a programmable clone of an Apple iBeacon device
 * [serial_debug](/serial_debug) - an example project for UART debugging
 * [toggle_led](/toggle_led) - an LED that can be turned on or off with your phone
