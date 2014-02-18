@@ -4,10 +4,8 @@
 # Changed AD format to match iBeacon advertising data
 # http://stackoverflow.com/questions/18906988/what-is-the-ibeacon-bluetooth-profile/
 
-dim handle
-dim offset
-dim result
-dim value_len
+dim load_result
+dim load_len
 dim uuid_value(16)
 dim major_value(2)
 dim minor_value(2)
@@ -22,17 +20,17 @@ dim adv_data(30) # custom adv data
 # Boot event listener
 event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
   ps_beacon_uuid = $8000
-  call flash_ps_load(ps_beacon_uuid)(result, value_len, uuid_value(0:16))
-  call attributes_write(xgatt_beacon_uuid, 0, value_len, uuid_value(0:16))
+  call flash_ps_load(ps_beacon_uuid)(load_result, load_len, uuid_value(0:16))
+  call attributes_write(xgatt_beacon_uuid, 0, load_len, uuid_value(0:16))
   ps_beacon_major = $8001
-  call flash_ps_load(ps_beacon_major)(result, value_len, major_value(0:2))
-  call attributes_write(xgatt_beacon_major, 0, value_len, major_value(0:2))
+  call flash_ps_load(ps_beacon_major)(load_result, load_len, major_value(0:2))
+  call attributes_write(xgatt_beacon_major, 0, load_len, major_value(0:2))
   ps_beacon_minor = $8002
-  call flash_ps_load(ps_beacon_minor)(result, value_len, minor_value(0:2))
-  call attributes_write(xgatt_beacon_minor, 0, value_len, minor_value(0:2))
+  call flash_ps_load(ps_beacon_minor)(load_result, load_len, minor_value(0:2))
+  call attributes_write(xgatt_beacon_minor, 0, load_len, minor_value(0:2))
   ps_beacon_tx = $8003
-  call flash_ps_load(ps_beacon_tx)(result, value_len, tx_value(0:1))
-  call attributes_write(xgatt_beacon_tx, 0, value_len, tx_value(0:1))
+  call flash_ps_load(ps_beacon_tx)(load_result, load_len, tx_value(0:1))
+  call attributes_write(xgatt_beacon_tx, 0, load_len, tx_value(0:1))
 
   adv_data( 0:1) = $02 # ad field length = 2 bytes
   adv_data( 1:1) = gap_ad_type_flags   # ad field type = 0x01 (Flags)

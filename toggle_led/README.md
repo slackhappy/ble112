@@ -18,7 +18,7 @@ Here is the BLE Breakout Pinout, with the 6 CC Debugger Pin numbers indicated in
 
 ## Flashing instructions ##
 1. Connect a 1K resistor from P0_7 to the positive (longer lead) end of an LED, and connect the negative end of the LED to ground.
-2. From the toggle_led directory, `C:\Bluegiga\ble-1.2.0-88\bin\bgbuild.exe project.xml`
+2. From the toggle_led directory, `C:\Bluegiga\ble-1.2.2-100\bin\bgbuild.exe project.xml`
 3. Flash the device using the BLE SW Update Tool and `out.hex` from the toggle_led directory.  Your LED should now be blinking.
 4. Using [LightBlue](https://itunes.apple.com/us/app/lightblue-bluetooth-low-energy/id557428110?mt=8), find the device.  It should be called "Toggle LED Demo".  Navigate to the service starting with "384ABBC5".  This is a GUID that I generated for my service (I used [GUIDGen.com](http://www.guidgen.com/)).  There should be one characteristic found.  Press Write.  In the "Write Hex" box, write `00`.  This should make the LED stay solid on.  Now write `01`.  The LED should now blink again.
 

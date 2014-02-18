@@ -16,7 +16,7 @@ Here is the BLE Breakout Pinout, with the 6 CC Debugger Pin numbers indicated in
 ## Flashing instructions ##
 1.  Attach your CC Debugger using the pinout above.  Your CC debugger light should be green.  Open the BLE Update Tool (called BLE SW Update Tool after install).  Click info.  You will get your Serial Number.  Click the "Request License Key" link under license key to get a license key.  I had to right-click and copy the link location, then paste that into my browser.  It is actually a `mailto:` link, so you need to wait a day to get your license key back from support.
  ![BLE SW Update Tool](http://cl.ly/image/38393t310u41/BLESWUpdateTool.PNG)
-2. From the beacon directory, `C:\Bluegiga\ble-1.2.0-88\bin\bgbuild.exe project.xml`.
+2. From the beacon directory, `C:\Bluegiga\ble-1.2.2-100\bin\bgbuild.exe project.xml`.
 
 3. Flash the device using the BLE SW Update Tool and `out.hex` from the beacon directory.
 

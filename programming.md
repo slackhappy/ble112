@@ -24,9 +24,9 @@ A word of caution: I used the included ribbon cable initially, but I think the p
 1.  Attach your CC Debugger using the pinout above.  Your CC debugger light should be green.  Open the BLE Update Tool (called BLE SW Update Tool after install).  Click info.  You will get your Serial Number.  Click the "Request License Key" link under license key to get a license key.  I had to right-click and copy the link location, then paste that into my browser.  It is actually a `mailto:` link, so you need to wait a day to get your license key back from support.
  ![BLE SW Update Tool](http://cl.ly/image/38393t310u41/BLESWUpdateTool.PNG)
 2. Build one of the example projects: in `cmd`:
- * `cd \Bluegiga\ble-1.2.0-88\example\find_me\`
+ * `cd \Bluegiga\ble-1.2.2-100\example\find_me\`
  * `..\..\bin\bgbuild.exe project.bgproj`
- * open `C:\Bluegiga\ble-1.2.0-88\example\find_me\out.hex` in the BLE SW Update Tool. An click "Update".  The screen should show a green "Update completed" panel.
+ * open `C:\Bluegiga\ble-1.2.2-100\example\find_me\out.hex` in the BLE SW Update Tool. An click "Update".  The screen should show a green "Update completed" panel.
  * On your iOS device with BLE (iPhone 4S and up), if you have one, download [BTL Explorer](https://itunes.apple.com/us/app/btlexplorer/id532751145?mt=8).  You should see "Bluegiga Find Me" in the peripherals list.
 
  ![BTLExplorer showing Bluegiga Find Me in the list](http://cl.ly/image/2R1z2c383u0G/BTLExplorer.PNG.jpg)

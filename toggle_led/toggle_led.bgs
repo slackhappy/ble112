@@ -3,14 +3,14 @@
 # Added support for changing the LED toggle state via the GAP
 #
 # This example script will flash an LED connected to P0.7 every second
-dim result
+dim read_result
 dim port
 dim data
 # LED Toggle Control. 0x00 = Always on. 0x01 = Toggle. Set via GATT
 dim xgatt_led_value
 
 # Boot event listener
-event system_boot(major ,minor ,patch ,build ,ll_version ,protocol_version ,hw)
+event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
   xgatt_led_value = 1
 
   # configure P0.7 as output
@@ -30,7 +30,7 @@ end
 
 #Timer event listener toggles LED if xgatt_led_value is > 0
 event hardware_soft_timer(handle)
-  call hardware_io_port_read(0, $80)(result, port, data)
+  call hardware_io_port_read(0, $80)(read_result, port, data)
 
   if (data & $80) && xgatt_led_value then
     call hardware_io_port_write(0, $80, 0)
